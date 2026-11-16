@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0f766e" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>LabaLab - Media Pembelajaran Akuntansi Dasar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --primary-light: #ccfbf1;
+      --accent: #d97706;
+      --sidebar-bg: #0f2926;
+      --sidebar-hover: #173d38;
+      --bg: #f2f6f5;
+      --surface: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #dce5e3;
+      --danger: #dc2626;
+      --radius: 14px;
+      --shadow: 0 4px 18px rgba(15, 41, 38, 0.05);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 66px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      z-index: 100;
+      gap: 14px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 210px;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--text);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-logo {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, #14b8a6, #0f766e);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 16px;
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.25);
+      flex-shrink: 0;
+    }
+
+    .brand-text h1 { font-size: 18px; font-weight: 800; color: var(--primary); line-height: 1.1; }
+    .brand-text span { font-size: 11px; color: var(--text-muted); display: block; }
+
+    .topnav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg);
+      padding: 4px;
+      border-radius: 12px;
+    }
+
+    .topnav button {
+      background: transparent;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 9px;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+    .topnav button:hover { color: var(--primary); }
+    .topnav button.active { background: #fff; color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+
+    .topbar-right { display: flex; align-items: center; gap: 10px; }
+
+    .search-box { position: relative; width: 210px; }
+    .search-box input {
+      width: 100%;
+      padding: 8px 12px 8px 34px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+    }
+    .search-box input:focus { border-color: var(--primary); background: #fff; }
+    .search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-size: 13px; color: var(--text-muted); }
+
+    .search-results {
+      position: absolute;
+      top: 42px; left: 0; right: 0;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+      max-height: 290px;
+      overflow-y: auto;
+      display: none;
+      z-index: 200;
+    }
+    .search-item { padding: 10px 14px; border-bottom: 1px solid var(--border); cursor: pointer; font-size: 13px; }
+    .search-item:hover { background: #f0fdfa; }
+    .search-item small { display: block; color: var(--text-muted); font-size: 11px; }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px 4px 4px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .avatar-circle {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800;
+    }
+    .avatar-circle.admin-mode { background: var(--primary); }
+
+    .app-container { display: flex; padding-top: 66px; min-height: 100vh; }
+
+    .sidebar {
+      width: 266px;
+      background: var(--sidebar-bg);
+      color: #cbd5e1;
+      padding: 18px 14px;
+      position: fixed;
+      top: 66px; bottom: 0; left: 0;
+      overflow-y: auto;
+      z-index: 90;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #5eead4;
+      letter-spacing: 0.08em;
+      padding: 10px 12px 6px;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .nav-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border: none;
+      background: transparent;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #e2e8f0;
+      cursor: pointer;
+      text-align: left;
+      transition: 0.15s;
+      margin-bottom: 2px;
+    }
+    .nav-btn:hover { background: var(--sidebar-hover); color: #fff; }
+    .nav-btn.active { background: var(--primary); color: #fff; }
+    .nav-left { display: flex; align-items: center; gap: 10px; }
+    .nav-badge {
+      background: rgba(255,255,255,0.14);
+      color: #99f6e4;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    .nav-sub {
+      margin-left: 18px;
+      padding-left: 10px;
+      border-left: 1px solid rgba(255,255,255,0.12);
+      margin-bottom: 8px;
+    }
+
+    .nav-sub-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 10px;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #94a3b8;
+      cursor: pointer;
+      text-align: left;
+    }
+    .nav-sub-btn:hover, .nav-sub-btn.active { color: #fff; background: var(--sidebar-hover); }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    .main { flex: 1; margin-left: 266px; padding: 26px 30px 60px; max-width: 1260px; }
+
+    .hero {
+      background: linear-gradient(135deg, #0f766e 0%, #115e59 60%, #0f2926 100%);
+      border-radius: 20px;
+      padding: 32px 34px;
+      color: white;
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      gap: 24px;
+      align-items: center;
+      box-shadow: 0 12px 30px rgba(15, 118, 110, 0.22);
+      margin-bottom: 22px;
+    }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.14);
+      color: #99f6e4;
+      padding: 5px 13px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .hero h2 { font-size: 28px; font-weight: 800; margin-bottom: 10px; line-height: 1.25; }
+    .hero p { font-size: 14px; opacity: 0.9; margin-bottom: 20px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .btn-amber {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 11px 20px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 13.5px;
+      cursor: pointer;
+    }
+    .btn-amber:hover { background: #b45309; }
+
+    .btn-glass {
+      background: rgba(255,255,255,0.14);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 11px 18px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 13.5px;
+      cursor: pointer;
+    }
+
+    .cycle-widget {
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 16px;
+      padding: 18px;
+    }
+    .cycle-widget h4 { font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.05em; color: #99f6e4; margin-bottom: 10px; }
+    .cycle-step {
+      display: flex; align-items: center; gap: 10px;
+      padding: 7px 10px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 8px;
+      margin-bottom: 6px;
+      font-size: 12.5px; font-weight: 600;
+    }
+    .cycle-num {
+      width: 22px; height: 22px; border-radius: 6px;
+      background: var(--accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; flex-shrink: 0;
+    }
+
+    .top-strip { display: grid; grid-template-columns: 1.7fr 1fr; gap: 18px; margin-bottom: 24px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .tp-card { border-top: 4px solid var(--primary); }
+    .tp-card h4 { font-size: 15.5px; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+    .tp-list { padding-left: 18px; font-size: 13px; }
+    .tp-list li { margin-bottom: 5px; }
+
+    .progress-card { border-top: 4px solid var(--accent); display: flex; flex-direction: column; justify-content: space-between; }
+    .progress-bar-bg { height: 10px; background: #e2e8f0; border-radius: 999px; overflow: hidden; margin: 10px 0; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #14b8a6); border-radius: 999px; transition: width 0.3s; }
+
+    .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+    .section-header h3 { font-size: 20px; font-weight: 800; }
+    .section-header p { font-size: 13px; color: var(--text-muted); }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .bab-card { border-left: 5px solid var(--primary); display: flex; flex-direction: column; justify-content: space-between; transition: 0.2s; }
+    .bab-card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(15, 41, 38, 0.08); }
+    .bab-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .step-tag { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 8px; color: #fff; }
+    .status-pill { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: #f1f5f9; color: var(--text-muted); }
+    .status-pill.done { background: #d1fae5; color: #065f46; }
+    .bab-card h4 { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
+    .bab-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+    .bab-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid #f1f5f9; }
+
+    .formula-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 10px; padding: 12px 16px; margin: 10px 0; font-weight: 700; color: var(--primary-dark); font-size: 14px; }
+    .example-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 12px 16px; margin: 10px 0; font-size: 13.5px; }
+    .sim-box { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 16px; margin-top: 14px; }
+    .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 10px 0; }
+
+    .input-group { margin-bottom: 10px; }
+    .input-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
+    .input-group input, .input-group select, .input-group textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13.5px;
+      background: #fff;
+    }
+    .input-group textarea { min-height: 90px; resize: vertical; }
+
+    .sim-result { margin-top: 10px; padding: 10px 14px; background: #fff; border-radius: 8px; border-left: 4px solid var(--primary); font-size: 13.5px; display: none; }
+
+    .btn-primary {
+      background: var(--primary); color: #fff; border: none;
+      padding: 9px 16px; border-radius: 9px; font-family: inherit;
+      font-weight: 700; font-size: 13px; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+
+    .btn-outline {
+      background: #fff; color: var(--text); border: 1px solid var(--border);
+      padding: 9px 16px; border-radius: 9px; font-family: inherit;
+      font-weight: 600; font-size: 13px; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-outline:hover { background: var(--bg); }
+
+    .btn-danger {
+      background: #fee2e2; color: var(--danger); border: 1px solid #fecaca;
+      padding: 7px 12px; border-radius: 8px; font-family: inherit;
+      font-weight: 700; font-size: 12px; cursor: pointer;
+    }
+    .btn-danger:hover { background: var(--danger); color: #fff; }
+
+    .admin-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+    .admin-tab-btn {
+      padding: 8px 14px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .admin-tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: #0f2926;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      z-index: 999;
+      display: none;
+    }
+
+    .table-wrap { overflow-x: auto; margin: 10px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 9px 12px; border: 1px solid var(--border); text-align: left; }
+    th { background: #f0fdfa; color: var(--primary-dark); font-weight: 700; }
+
+    .quiz-option {
+      display: block; width: 100%; text-align: left;
+      padding: 11px 14px; margin-bottom: 8px;
+      border: 1px solid var(--border); border-radius: 9px;
+      background: #fff; font-family: inherit; font-size: 13.5px; cursor: pointer;
+    }
+    .quiz-option:hover { background: #f0fdfa; border-color: var(--primary); }
+    .quiz-option.selected { background: var(--primary); color: #fff; border-color: var(--primary); font-weight: 600; }
+    .quiz-option.correct { background: #d1fae5; color: #065f46; border-color: #10b981; font-weight: 700; }
+    .quiz-option.wrong { background: #fee2e2; color: #991b1b; border-color: #ef4444; }
+
+    .small-guide-note { font-size: 10.5px; color: #94a3b8; font-style: italic; line-height: 1.4; }
+    .page-nav-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 10px; }
+    .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); z-index: 85; }
+
+    @media (max-width: 1040px) {
+      .topnav { display: none; }
+      .hero, .top-strip { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 900px) {
+      .menu-toggle { display: flex; }
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .sidebar-overlay.open { display: block; }
+      .main { margin-left: 0; padding: 18px 14px 50px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .search-box { width: 140px; }
+      .user-pill span.user-name { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand-wrap">
+      <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+      <div class="brand-logo">LL</div>
+      <div class="brand-text">
+        <h1>LabaLab</h1>
+        <span>Belajar Akuntansi Praktis</span>
+      </div>
+    </div>
+
+    <nav class="topnav" id="topnav">
+      <button class="active" data-view="beranda" onclick="navigate('beranda')">Beranda</button>
+      <button data-view="materi-all" onclick="navigate('materi-all')">Materi</button>
+      <button data-view="video" onclick="navigate('video')">Video</button>
+      <button data-view="evaluasi" onclick="navigate('evaluasi')">Evaluasi</button>
+      <button data-view="diskusi" onclick="navigate('diskusi')">Ruang Diskusi ↗</button>
+    </nav>
+
+    <div class="topbar-right">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="globalSearch" placeholder="Cari materi atau istilah..." oninput="handleSearch(this.value)" />
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="user-pill" id="topUserPill" onclick="navigate('penyusun')" title="Menu Penyusun"></div>
+    </div>
+  </header>
+
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <div class="app-container">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main" id="mainContent"></main>
+  </div>
+
+  <div class="toast" id="toastBox">Perubahan berhasil disimpan!</div>
+
+<script>
+const DEFAULT_DATA = {
+  auth: {
+    username: "penyusun",
+    password: "123456"
+  },
+  config: {
+    telegramUrl: "https://t.me/+GrupDiskusiLabaLab",
+    heroTitle: "Belajar Akuntansi Jadi Lebih Mudah di LabaLab!",
+    heroDesc: "Pahami alur pencatatan keuangan bisnis dari nol secara berurutan: mulai dari Persamaan Dasar, Jurnal Umum, Buku Besar, hingga menyusun Laporan Laba Rugi dan Neraca.",
+    tujuanUmum: [
+      "Memahami konsep dasar Harta, Utang, Modal, Pendapatan, dan Beban secara benar.",
+      "Mampu mencatat transaksi usaha sederhana secara berkesinambungan dari Jurnal Umum hingga Neraca Saldo.",
+      "Mampu menyusun dan membaca Laporan Laba Rugi serta Neraca untuk menilai keuntungan usaha."
+    ],
+    quizizzLinks: {
+      bab1: "https://quizizz.com/join?gc=111111",
+      bab2: "https://quizizz.com/join?gc=222222",
+      bab3: "https://quizizz.com/join?gc=333333",
+      bab4: "https://quizizz.com/join?gc=444444"
+    }
+  },
+  profile: {
+    nama: "Nama Penyusun Anda",
+    peran: "Penyusun Media Pembelajaran LabaLab",
+    institusi: "Universitas / Sekolah Anda",
+    nim: "1234567890",
+    prodi: "Pendidikan Akuntansi / Akuntansi",
+    email: "penyusun@labalab.id",
+    deskripsi: "LabaLab adalah media belajar akuntansi dasar yang ringan, berkesinambungan, dan interaktif untuk pengguna HP maupun laptop."
+  },
+  chapters: [
+    {
+      id: "bab1",
+      step: "01",
+      num: "Bab I",
+      title: "Persamaan Dasar Akuntansi",
+      desc: "Memahami fondasi akuntansi: apa itu Harta (Aset), Utang, dan Modal serta aturan keseimbangan Harta = Utang + Modal.",
+      color: "#0d9488",
+      continuity: "Langkah pertama belajar akuntansi adalah memahami dari mana harta usaha berasal: apakah dari modal sendiri atau dari pinjaman (utang).",
+      tujuan: [
+        "Mengenal 3 unsur utama posisi keuangan: Harta (Aset), Utang (Liabilitas), dan Modal (Ekuitas).",
+        "Memahami prinsip keseimbangan Persamaan Dasar Akuntansi (Harta = Utang + Modal).",
+        "Mencatat pengaruh transaksi sederhana terhadap persamaan akuntansi."
+      ],
+      simType: "persamaan",
+      contentHtml: `<div class="card" style="margin-bottom:18px;">
+        <h4 style="font-size:17px; font-weight:800; margin-bottom:8px;">1. Konsep Dasar Akuntansi</h4>
+        <p style="font-size:14px;">Akuntansi adalah bahasa bisnis untuk mencatat transaksi keuangan secara rapi agar pemilik usaha tahu apakah bisnisnya untung atau rugi. Pondasi utamanya disebut <strong>Persamaan Dasar Akuntansi</strong>:</p>
+        <div class="formula-box">⚖️ HARTA (Aset) = UTANG (Liabilitas) + MODAL (Ekuitas)</div>
+        <ul style="padding-left:20px; font-size:13.5px; margin-top:8px;">
+          <li><strong>Harta (Aset):</strong> Kekayaan yang dimiliki usaha (contoh: Uang Kas, Piutang, Peralatan Kamera).</li>
+          <li><strong>Utang (Liabilitas):</strong> Kewajiban yang harus dibayar ke pihak lain (contoh: Pinjaman Bank, Utang Usaha).</li>
+          <li><strong>Modal (Ekuitas):</strong> Hak milik pemilik usaha atas kekayaan bisnis.</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-bottom:18px;">
+        <h4 style="font-size:17px; font-weight:800; margin-bottom:8px;">2. Contoh Kasus Berkelanjutan: Studio Foto LensaKita</h4>
+        <p style="font-size:13.5px; margin-bottom:10px;">Perhatikan transaksi awal bulan Januari milik Kak Raka saat mendirikan <strong>Studio Foto LensaKita</strong>:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tanggal</th><th>Transaksi</th><th>Kas</th><th>Peralatan</th><th>= Utang</th><th>+ Modal</th></tr></thead>
+            <tbody>
+              <tr><td>1 Jan</td><td>Setor modal awal tunai Rp 10.000.000</td><td>+10.000.000</td><td>0</td><td>0</td><td>+10.000.000</td></tr>
+              <tr><td>3 Jan</td><td>Beli kamera tunai Rp 4.000.000</td><td>-4.000.000</td><td>+4.000.000</td><td>0</td><td>0</td></tr>
+              <tr><td>5 Jan</td><td>Pinjam uang ke bank Rp 2.000.000</td><td>+2.000.000</td><td>0</td><td>+2.000.000</td><td>0</td></tr>
+              <tr style="font-weight:700; background:#f0fdfa;"><td colspan="2">Saldo Akhir (Seimbang: 12 Juta = 12 Juta)</td><td>8.000.000</td><td>4.000.000</td><td>2.000.000</td><td>10.000.000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>`
+    },
+    {
+      id: "bab2",
+      step: "02",
+      num: "Bab II",
+      title: "Debit, Kredit & Jurnal Umum",
+      desc: "Mengenal aturan praktis Debit-Kredit dan cara mencatat transaksi harian ke dalam Jurnal Umum secara kronologis.",
+      color: "#d97706",
+      continuity: "Pada Bab I kita tahu posisi Harta, Utang, dan Modal. Di Bab II, setiap transaksi harian dicatat lebih rapi ke dalam Jurnal Umum menggunakan sistem Debit dan Kredit.",
+      tujuan: [
+        "Memahami aturan saldo normal akun (Harta, Utang, Modal, Pendapatan, Beban).",
+        "Menentukan sisi Debit dan Kredit dari suatu transaksi usaha.",
+        "Menyusun Jurnal Umum sederhana secara kronologis."
+      ],
+      simType: "debitkredit",
+      contentHtml: `<div class="card" style="margin-bottom:18px;">
+        <h4 style="font-size:17px; font-weight:800; margin-bottom:8px;">1. Rahasia Mudah Aturan Debit & Kredit</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Jenis Akun</th><th>Jika Bertambah (+)</th><th>Jika Berkurang (-)</th><th>Contoh Akun</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Harta (Aset)</strong></td><td><strong style="color:var(--primary);">DEBIT</strong></td><td>Kredit</td><td>Kas, Piutang, Peralatan</td></tr>
+              <tr><td><strong>Beban</strong></td><td><strong style="color:var(--primary);">DEBIT</strong></td><td>Kredit</td><td>Beban Listrik, Beban Sewa</td></tr>
+              <tr><td><strong>Utang (Liabilitas)</strong></td><td>Kredit</td><td><strong style="color:var(--accent);">DEBIT</strong></td><td>Utang Usaha, Utang Bank</td></tr>
+              <tr><td><strong>Modal (Ekuitas)</strong></td><td>Kredit</td><td><strong style="color:var(--accent);">DEBIT</strong></td><td>Modal Pemilik</td></tr>
+              <tr><td><strong>Pendapatan</strong></td><td>Kredit</td><td><strong style="color:var(--accent);">DEBIT</strong></td><td>Pendapatan Jasa Foto</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:18px;">
+        <h4 style="font-size:17px; font-weight:800; margin-bottom:8px;">2. Jurnal Umum Lanjutan Studio Foto LensaKita</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tanggal</th><th>Nama Akun & Keterangan</th><th>Debit (Rp)</th><th>Kredit (Rp)</th></tr></thead>
+            <tbody>
+              <tr><td>1 Jan</td><td>Kas / Modal Pemilik</td><td>10.000.000</td><td>10.000.000</td></tr>
+              <tr><td>3 Jan</td><td>Peralatan Kamera / Kas</td><td>4.000.000</td><td>4.000.000</td></tr>
+              <tr><td>5 Jan</td><td>Kas / Utang Bank</td><td>2.000.000</td><td>2.000.000</td></tr>
+              <tr><td>10 Jan</td><td>Kas / Pendapatan Jasa</td><td>5.000.000</td><td>5.000.000</td></tr>
+              <tr><td>15 Jan</td><td>Beban Listrik & Sewa / Kas</td><td>1.500.000</td><td>1.500.000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>`
+    },
+    {
+      id: "bab3",
+      step: "03",
+      num: "Bab III",
+      title: "Buku Besar & Neraca Saldo",
+      desc: "Mengelompokkan catatan jurnal ke masing-masing akun (Buku Besar) dan mengecek keseimbangan total di Neraca Saldo.",
+      color: "#0284c7",
+      continuity: "Data transaksi di Jurnal Umum (Bab II) masih bercampur. Di Bab III, kita kelompokkan per akun ke Buku Besar lalu kita uji keseimbangannya di Neraca Saldo.",
+      tujuan: [
+        "Memahami proses pemindahan (posting) dari Jurnal Umum ke Buku Besar.",
+        "Menghitung saldo akhir tiap akun.",
+        "Menyusun Neraca Saldo dan memastikan jumlah Debit sama dengan Kredit."
+      ],
+      simType: "neracasaldo",
+      contentHtml: `<div class="card" style="margin-bottom:18px;">
+        <h4 style="font-size:17px; font-weight:800; margin-bottom:8px;">1. Posting ke Buku Besar (Contoh Akun Kas)</h4>
+        <div class="example-box">
+          <strong>Hitung Saldo Kas Studio LensaKita:</strong><br>
+          Kas Masuk (Debit): 10.000.000 + 2.000.000 + 5.000.000 = <strong>Rp 17.000.000</strong><br>
+          Kas Keluar (Kredit): 4.000.000 + 1.500.000 = <strong>Rp 5.500.000</strong><br>
+          👉 <strong>Saldo Akhir Kas = Rp 11.500.000 (Debit)</strong>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:18px;">
+        <h4 style="font-size:17px; font-weight:800; margin-bottom:8px;">2. Neraca Saldo (31 Januari)</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Nama Akun</th><th>Debit (Rp)</th><th>Kredit (Rp)</th></tr></thead>
+            <tbody>
+              <tr><td>Kas</td><td>11.500.000</td><td>-</td></tr>
+              <tr><td>Peralatan Kamera</td><td>4.000.000</td><td>-</td></tr>
+              <tr><td>Utang Bank</td><td>-</td><td>2.000.000</td></tr>
+              <tr><td>Modal Pemilik</td><td>-</td><td>10.000.000</td></tr>
+              <tr><td>Pendapatan Jasa</td><td>-</td><td>5.000.000</td></tr>
+              <tr><td>Beban Listrik & Sewa</td><td>1.500.000</td><td>-</td></tr>
+              <tr style="font-weight:800; background:#f0fdfa;"><td>TOTAL NERACA SALDO (BALANCE!)</td><td>17.000.000</td><td>17.000.000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>`
+    },
+    {
+      id: "bab4",
+      step: "04",
+      num: "Bab IV",
+      title: "Laporan Keuangan Sederhana",
+      desc: "Tahap akhir siklus akuntansi: menyusun Laporan Laba Rugi untuk melihat untung/rugi dan Laporan Posisi Keuangan (Neraca).",
+      color: "#059669",
+      continuity: "Inilah tujuan akhir dari Bab I–III! Dari angka Neraca Saldo di Bab III, kita langsung menyusun Laporan Laba Rugi dan Neraca untuk pemilik usaha.",
+      tujuan: [
+        "Membedakan akun Laporan Laba Rugi dan Neraca.",
+        "Menghitung Laba Bersih atau Rugi Bersih usaha.",
+        "Menyusun Laporan Laba Rugi dan Neraca akhir periode."
+      ],
+      simType: "laba",
+      contentHtml: `<div class="card" style="margin-bottom:18px;">
+        <h4 style="font-size:17px; font-weight:800; margin-bottom:8px;">1. Laporan Laba Rugi (Menghitung Untung/Rugi)</h4>
+        <div class="formula-box">💰 Laba Bersih = Total Pendapatan − Total Beban</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th colspan="2">Laporan Laba Rugi — Studio Foto LensaKita (Januari)</th></tr></thead>
+            <tbody>
+              <tr><td>Pendapatan Jasa Foto</td><td style="text-align:right;">Rp 5.000.000</td></tr>
+              <tr><td>Beban Listrik & Sewa</td><td style="text-align:right;">(Rp 1.500.000)</td></tr>
+              <tr style="font-weight:800; background:#d1fae5; color:#065f46;"><td>LABA BERSIH USAHA</td><td style="text-align:right;">Rp 3.500.000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:18px;">
+        <h4 style="font-size:17px; font-weight:800; margin-bottom:8px;">2. Modal Akhir & Neraca Akhir</h4>
+        <p style="font-size:13.5px;">Modal Akhir = Rp 10.000.000 + Laba Bersih Rp 3.500.000 = <strong>Rp 13.500.000</strong>.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>HARTA (ASET)</th><th>Nilai (Rp)</th><th>UTANG & MODAL</th><th>Nilai (Rp)</th></tr></thead>
+            <tbody>
+              <tr><td>Kas</td><td>11.500.000</td><td>Utang Bank</td><td>2.000.000</td></tr>
+              <tr><td>Peralatan Kamera</td><td>4.000.000</td><td>Modal Akhir</td><td>13.500.000</td></tr>
+              <tr style="font-weight:800; background:#f0fdfa;"><td>Total Harta</td><td>15.500.000</td><td>Total Utang + Modal</td><td>15.500.000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>`
+    }
+  ],
+  videos: [
+    { bab: "Bab I", title: "Cara Mudah Paham Persamaan Dasar Akuntansi", url: "https://www.youtube.com/results?search_query=persamaan+dasar+akuntansi+mudah" },
+    { bab: "Bab II", title: "Trik Anti Bingung Aturan Debit & Kredit Jurnal Umum", url: "https://www.youtube.com/results?search_query=cara+membuat+jurnal+umum+akuntansi" },
+    { bab: "Bab III", title: "Langkah Posting Buku Besar hingga Neraca Saldo", url: "https://www.youtube.com/results?search_query=posting+buku+besar+dan+neraca+saldo" },
+    { bab: "Bab IV", title: "Menyusun Laporan Laba Rugi & Neraca Usaha Jasa", url: "https://www.youtube.com/results?search_query=laporan+keuangan+sederhana+akuntansi" }
+  ],
+  quizzes: {
+    bab1: {
+      title: "Evaluasi Bab I: Persamaan Dasar Akuntansi",
+      questions: [
+        { q: "Rumus utama Persamaan Dasar Akuntansi yang benar adalah...", opts: ["Harta = Utang - Modal", "Harta = Utang + Modal", "Modal = Harta + Utang", "Pendapatan = Kas + Utang"], ans: 1, exp: "Harta (kekayaan) berasal dari Utang ditambah Modal pemilik." },
+        { q: "Jika Total Harta Rp 20.000.000 dan Utang Rp 5.000.000, berapakah Modal pemilik?", opts: ["Rp 5.000.000", "Rp 15.000.000", "Rp 20.000.000", "Rp 25.000.000"], ans: 1, exp: "Modal = Harta - Utang = 20 juta - 5 juta = Rp 15.000.000." },
+        { q: "Manakah di bawah ini yang termasuk kelompok Harta (Aset)?", opts: ["Utang Bank", "Pendapatan Jasa", "Peralatan & Kas", "Beban Gaji"], ans: 2, exp: "Kas dan Peralatan adalah kekayaan yang dimiliki oleh usaha." },
+        { q: "Pemilik menyetor uang tunai Rp 8.000.000 sebagai modal usaha. Pengaruhnya adalah...", opts: ["Kas bertambah, Utang bertambah", "Kas bertambah, Modal bertambah", "Kas berkurang, Modal bertambah", "Peralatan bertambah, Kas berkurang"], ans: 1, exp: "Uang tunai (Kas) usaha naik dan Modal juga naik." }
+      ]
+    },
+    bab2: {
+      title: "Evaluasi Bab II: Debit, Kredit & Jurnal Umum",
+      questions: [
+        { q: "Jika akun Kas (Harta) bertambah karena menerima pembayaran pelanggan, maka dicatat di sisi...", opts: ["Debit", "Kredit", "Modal", "Saldo Nol"], ans: 0, exp: "Kelompok Harta bertambah dicatat di sisi Debit." },
+        { q: "Membayar beban listrik Rp 500.000 secara tunai akan dicatat sebagai...", opts: ["Debit Kas, Kredit Beban Listrik", "Debit Beban Listrik, Kredit Kas", "Debit Modal, Kredit Kas", "Debit Utang, Kredit Kas"], ans: 1, exp: "Beban bertambah di Debit, sedangkan Kas keluar di Kredit." },
+        { q: "Akun Pendapatan Jasa apabila bertambah dicatat di sisi...", opts: ["Debit", "Kredit", "Harta", "Beban"], ans: 1, exp: "Saldo normal Pendapatan berada di sisi Kredit." },
+        { q: "Membeli peralatan Rp 3.000.000 secara tunai dicatat pada Jurnal Umum dengan...", opts: ["Debit Peralatan, Kredit Kas", "Debit Kas, Kredit Peralatan", "Debit Modal, Kredit Peralatan", "Debit Peralatan, Kredit Utang"], ans: 0, exp: "Peralatan bertambah (Debit) dan Kas berkurang (Kredit)." }
+      ]
+    },
+    bab3: {
+      title: "Evaluasi Bab III: Buku Besar & Neraca Saldo",
+      questions: [
+        { q: "Kegiatan memindahkan catatan dari Jurnal Umum ke masing-masing akun Buku Besar disebut...", opts: ["Jurnalisasi", "Posting", "Penutupan", "Audit"], ans: 1, exp: "Posting adalah proses pemindahan angka jurnal ke Buku Besar." },
+        { q: "Tujuan utama dibuatnya Neraca Saldo adalah untuk...", opts: ["Menghitung pajak bulanan", "Menguji keseimbangan total Debit dan Kredit seluruh akun", "Menentukan harga jual barang", "Menghapus transaksi yang salah"], ans: 1, exp: "Neraca Saldo memastikan total kolom Debit sama dengan kolom Kredit." },
+        { q: "Jika Kas masuk total Rp 12.000.000 dan Kas keluar Rp 4.500.000, saldo akhir Kas adalah...", opts: ["Rp 7.500.000 (Debit)", "Rp 7.500.000 (Kredit)", "Rp 16.500.000 (Debit)", "Rp 4.500.000 (Kredit)"], ans: 0, exp: "12.000.000 - 4.500.000 = Rp 7.500.000 bersaldo normal Debit." }
+      ]
+    },
+    bab4: {
+      title: "Evaluasi Bab IV: Laporan Keuangan",
+      questions: [
+        { q: "Laporan yang menyajikan Pendapatan dan Beban untuk mengetahui untung atau rugi adalah...", opts: ["Neraca", "Laporan Laba Rugi", "Buku Besar", "Jurnal Umum"], ans: 1, exp: "Laporan Laba Rugi membandingkan Pendapatan dikurangi Beban." },
+        { q: "Jika Pendapatan Usaha Rp 9.000.000 dan Total Beban Rp 6.200.000, maka usaha mengalami...", opts: ["Rugi Rp 2.800.000", "Laba Rp 2.800.000", "Laba Rp 15.200.000", "Impas (0)"], ans: 1, exp: "9 juta - 6,2 juta = Laba Rp 2.800.000." },
+        { q: "Jika Modal Awal Rp 10.000.000, Laba Bersih Rp 3.000.000, dan Prive Rp 500.000, Modal Akhir adalah...", opts: ["Rp 12.500.000", "Rp 13.000.000", "Rp 13.500.000", "Rp 7.500.000"], ans: 0, exp: "10.000.000 + 3.000.000 - 500.000 = Rp 12.500.000." }
+      ]
+    }
+  },
+  glossary: [
+    ["Akun (Perkiraan)", "Formulir atau tempat mencatat perubahan transaksi sejenis (seperti Kas, Utang, Modal)."],
+    ["Akuntansi", "Proses mencatat, mengelompokkan, dan menyajikan informasi keuangan untuk pengambilan keputusan."],
+    ["Aset (Harta)", "Seluruh kekayaan atau sumber daya ekonomi yang dimiliki oleh usaha."],
+    ["Balance (Seimbang)", "Kondisi ketika total sisi Debit sama persis dengan total sisi Kredit."],
+    ["Beban (Expense)", "Pengorbanan atau biaya yang dikeluarkan untuk memperoleh pendapatan (listrik, sewa, gaji)."],
+    ["Bukti Transaksi", "Dokumen tertulis sebagai dasar pencatatan akuntansi, seperti nota, kuitansi, dan faktur."],
+    ["Buku Besar", "Kumpulan akun-akun terpisah untuk meringkas mutasi transaksi dari Jurnal Umum."],
+    ["Debit", "Sisi sebelah kiri pada pencatatan akun akuntansi (posisi bertambah untuk Harta & Beban)."],
+    ["Ekuitas (Modal)", "Hak atau klaim pemilik atas kekayaan bersih usaha setelah dikurangi utang."],
+    ["Faktur (Invoice)", "Bukti transaksi pembelian atau penjualan yang dilakukan secara kredit."],
+    ["Jurnal Umum", "Catatan pertama transaksi keuangan yang disusun berurutan sesuai tanggal (kronologis)."],
+    ["Kas", "Uang tunai yang tersedia di brankas maupun saldo rekening bank siap pakai."],
+    ["Kredit", "Sisi sebelah kanan pada pencatatan akun akuntansi (posisi bertambah untuk Utang, Modal, Pendapatan)."],
+    ["Kuitansi", "Bukti tanda penerimaan atau penyerahan uang tunai secara sah."],
+    ["Laba Bersih", "Keuntungan akhir usaha setelah Pendapatan dikurangi seluruh Beban."],
+    ["Laporan Keuangan", "Hasil akhir siklus akuntansi berupa ringkasan kondisi keuangan usaha."],
+    ["Laporan Laba Rugi", "Laporan yang menunjukkan kinerja pendapatan, beban, serta laba atau rugi dalam satu periode."],
+    ["Laporan Perubahan Modal", "Laporan yang menjelaskan perubahan modal awal hingga menjadi modal akhir."],
+    ["Liabilitas (Utang)", "Kewajiban usaha yang harus dibayar kepada pihak lain di masa mendatang."],
+    ["Modal Awal", "Jumlah investasi atau kekayaan yang pertama kali ditanamkan pemilik pada awal periode."],
+    ["Neraca", "Laporan yang menampilkan posisi Harta, Utang, dan Modal pada tanggal tertentu."],
+    ["Neraca Saldo", "Daftar seluruh saldo akhir akun buku besar untuk menguji keseimbangan Debit dan Kredit."],
+    ["Pendapatan", "Aliran masuk atau hasil yang diperoleh usaha dari penyerahan jasa atau penjualan barang."],
+    ["Peralatan", "Barang tahan lama yang dipakai menunjang operasional usaha (komputer, kamera, meja)."],
+    ["Perlengkapan", "Barang habis pakai dalam operasional sehari-hari (kertas, tinta, alat tulis)."],
+    ["Persamaan Akuntansi", "Rumus keseimbangan dasar akuntansi: Harta = Utang + Modal."],
+    ["Piutang Usaha", "Tagihan perusahaan kepada pelanggan atas jasa atau barang yang belum dibayar tunai."],
+    ["Posting", "Proses memindahkan angka dari Jurnal Umum ke masing-masing akun di Buku Besar."],
+    ["Prive", "Pengambilan uang atau aset usaha oleh pemilik untuk keperluan pribadi."],
+    ["Saldo Normal", "Posisi standar (Debit atau Kredit) di mana suatu jenis akun bertambah nilainya."]
+  ],
+  bibliography: [
+    "Hery. (2021). Dasar-Dasar Akuntansi: Konsep dan Praktik. Jakarta: Grasindo.",
+    "Ikatan Akuntan Indonesia (IAI). (2022). Standar Akuntansi Keuangan Entitas Mikro, Kecil, dan Menengah (SAK EMKM). Jakarta: IAI.",
+    "Jusup, A. H. (2018). Dasar-Dasar Akuntansi (Jilid 1). Yogyakarta: STIE YKPN.",
+    "Rudianto. (2019). Pengantar Akuntansi: Konsep & Teknik Penyusunan Laporan Keuangan. Jakarta: Erlangga.",
+    "Soemarso, S. R. (2018). Akuntansi Suatu Pengantar (Buku 1). Jakarta: Salemba Empat.",
+    "Warren, C. S., Reeve, J. M., & Duchac, J. E. (2020). Accounting (28th Edition). Boston: Cengage Learning."
+  ]
+};
+
+function loadAppData() {
+  const saved = localStorage.getItem("labalab_appdata_v1");
+  if (!saved) return JSON.parse(JSON.stringify(DEFAULT_DATA));
+  try { return JSON.parse(saved); } catch { return JSON.parse(JSON.stringify(DEFAULT_DATA)); }
+}
+
+let appData = loadAppData();
+
+function saveAppData(msg = "Perubahan berhasil disimpan!") {
+  localStorage.setItem("labalab_appdata_v1", JSON.stringify(appData));
+  renderSidebar();
+  renderTopUser();
+  showToast(msg);
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toastBox");
+  t.textContent = msg;
+  t.style.display = "block";
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => { t.style.display = "none"; }, 2600);
+}
+
+function esc(str) {
+  return String(str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+let state = {
+  view: "beranda",
+  isAdmin: sessionStorage.getItem("labalab_admin_auth") === "1",
+  adminTab: "link",
+  editingBabId: null,
+  completed: JSON.parse(localStorage.getItem("labalab_done") || "{}"),
+  scores: JSON.parse(localStorage.getItem("labalab_scores") || "{}"),
+  posts: JSON.parse(localStorage.getItem("labalab_forum") || JSON.stringify([
+    { author: "Admin LabaLab", time: "Hari ini, 08:30", text: "Selamat belajar di LabaLab! Silakan tanyakan bagian siklus akuntansi yang masih membingungkan, atau langsung gabung ke Grup Telegram kami." },
+    { author: "Bima (Siswa)", time: "Hari ini, 09:45", text: "Kak, bedanya Peralatan dan Perlengkapan di akuntansi apa ya? Terima kasih!" }
+  ]))
+};
+
+function markDone(babId) {
+  state.completed[babId] = true;
+  localStorage.setItem("labalab_done", JSON.stringify(state.completed));
+  render();
+}
+
+function toggleSidebar(forceClose = false) {
+  const sb = document.getElementById("sidebar");
+  const ov = document.getElementById("sidebarOverlay");
+  if (forceClose) { sb.classList.remove("open"); ov.classList.remove("open"); }
+  else { sb.classList.toggle("open"); ov.classList.toggle("open"); }
+}
+
+function navigate(view) {
+  state.view = view;
+  toggleSidebar(true);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  renderSidebar();
+  updateTopNav();
+  render();
+}
+
+function updateTopNav() {
+  document.querySelectorAll(".topnav button").forEach(el => {
+    el.classList.toggle("active", el.dataset.view === state.view);
+  });
+}
+
+function renderTopUser() {
+  const pill = document.getElementById("topUserPill");
+  if (state.isAdmin) {
+    pill.innerHTML = `<div class="avatar-circle admin-mode">PN</div><span class="user-name">Mode Penyusun ✓</span>`;
+  } else {
+    pill.innerHTML = `<div class="avatar-circle">PL</div><span class="user-name">Pelajar</span>`;
+  }
+}
+
+function renderSidebar() {
+  const sb = document.getElementById("sidebar");
+  const v = state.view;
+  sb.innerHTML = `
+    <div class="sidebar-label">Menu Utama</div>
+    <button class="nav-btn ${v==='beranda'?'active':''}" onclick="navigate('beranda')">
+      <span class="nav-left">🏠 Beranda</span>
+    </button>
+
+    <button class="nav-btn ${v==='materi-all'?'active':''}" onclick="navigate('materi-all')">
+      <span class="nav-left">📒 Materi Akuntansi</span>
+      <span class="nav-badge">${appData.chapters.length} Bab</span>
+    </button>
+
+    <div class="nav-sub">
+      ${appData.chapters.map(c => `
+        <button class="nav-sub-btn ${v===c.id?'active':''}" onclick="navigate('${c.id}')">
+          <span style="display:flex;align-items:center;gap:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+            <span class="dot" style="background:${c.color}"></span> ${esc(c.num)}: ${esc(c.title)}
+          </span>
+        </button>
+      `).join("")}
+    </div>
+
+    <button class="nav-btn ${v==='video'?'active':''}" onclick="navigate('video')">
+      <span class="nav-left">🎬 Video Penjelasan</span>
+      <span class="nav-badge">${appData.videos.length}</span>
+    </button>
+
+    <button class="nav-btn ${v==='evaluasi'?'active':''}" onclick="navigate('evaluasi')">
+      <span class="nav-left">✅ Evaluasi & Skor</span>
+      <span class="nav-badge">Kuis</span>
+    </button>
+
+    <div class="nav-sub">
+      ${appData.chapters.map(c => `
+        <button class="nav-sub-btn ${v==='quiz-'+c.id?'active':''}" onclick="openQuiz('${c.id}')">
+          <span>Kuis ${esc(c.num)}</span><span>↗</span>
+        </button>
+      `).join("")}
+    </div>
+
+    <button class="nav-btn ${v==='diskusi'?'active':''}" onclick="navigate('diskusi')">
+      <span class="nav-left">💬 Ruang Diskusi</span>
+      <span>↗</span>
+    </button>
+
+    <div class="sidebar-label" style="margin-top:14px;">Referensi & Info</div>
+
+    <button class="nav-btn ${v==='glosarium'?'active':''}" onclick="navigate('glosarium')">
+      <span class="nav-left">📖 Glosarium</span>
+      <span class="nav-badge">${appData.glossary.length}</span>
+    </button>
+
+    <button class="nav-btn ${v==='pustaka'?'active':''}" onclick="navigate('pustaka')">
+      <span class="nav-left">📚 Daftar Pustaka</span>
+    </button>
+
+    <button class="nav-btn ${v==='profil'?'active':''}" onclick="navigate('profil')">
+      <span class="nav-left">👤 Profil Penyusun</span>
+    </button>
+
+    <button class="nav-btn ${v==='penyusun'?'active':''}" onclick="navigate('penyusun')" style="margin-top:6px; border:1px solid rgba(94,234,212,0.28);">
+      <span class="nav-left">${state.isAdmin ? '🛠️ Editor Penyusun' : '🔐 Login Penyusun'}</span>
+      <span class="nav-badge">${state.isAdmin ? 'Aktif' : 'Admin'}</span>
+    </button>
+
+    <button class="nav-btn ${v==='panduan'?'active':''}" onclick="navigate('panduan')">
+      <span class="nav-left" style="font-size:12px; opacity:0.85;">ℹ️ Panduan Media</span>
+    </button>
+
+    <div style="margin-top:10px; padding:8px 10px; border-radius:8px; background:rgba(255,255,255,0.05);">
+      <p class="small-guide-note">
+        *Panduan penggunaan media hanya petunjuk teknis pengoperasian aplikasi (bukan bagian dari materi akuntansi).
+      </p>
+    </div>
+  `;
+}
+
+function handleSearch(query) {
+  const box = document.getElementById("searchResults");
+  const q = query.trim().toLowerCase();
+  if (!q) { box.style.display = "none"; return; }
+
+  let hits = [];
+  appData.chapters.forEach(c => {
+    if (c.title.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q) || c.num.toLowerCase().includes(q)) {
+      hits.push({ title: `${c.num}: ${c.title}`, sub: "Materi Akuntansi", fn: () => navigate(c.id) });
+    }
+  });
+  appData.glossary.forEach(g => {
+    if (g[0].toLowerCase().includes(q) || g[1].toLowerCase().includes(q)) {
+      hits.push({ title: g[0], sub: "Glosarium", fn: () => navigate("glosarium") });
+    }
+  });
+
+  if (!hits.length) {
+    box.innerHTML = `<div class="search-item">Tidak ada hasil untuk "${esc(query)}"</div>`;
+  } else {
+    box.innerHTML = hits.slice(0, 7).map((h, i) => `
+      <div class="search-item" id="hit-${i}"><strong>${esc(h.title)}</strong><small>${h.sub}</small></div>
+    `).join("");
+    hits.slice(0, 7).forEach((h, i) => {
+      document.getElementById(`hit-${i}`).onclick = () => {
+        box.style.display = "none";
+        document.getElementById("globalSearch").value = "";
+        h.fn();
+      };
+    });
+  }
+  box.style.display = "block";
+}
+
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".search-box")) document.getElementById("searchResults").style.display = "none";
+});
+
+function render() {
+  const m = document.getElementById("mainContent");
+  const v = state.view;
+  if (v === "beranda") m.innerHTML = renderBeranda();
+  else if (v === "materi-all") m.innerHTML = renderAllMateri();
+  else if (appData.chapters.some(c => c.id === v)) m.innerHTML = renderChapter(v);
+  else if (v === "video") m.innerHTML = renderVideo();
+  else if (v === "evaluasi") m.innerHTML = renderEvaluasi();
+  else if (v.startsWith("quiz-")) m.innerHTML = renderQuizPage(v.replace("quiz-", ""));
+  else if (v === "diskusi") m.innerHTML = renderDiskusi();
+  else if (v === "glosarium") m.innerHTML = renderGlosarium();
+  else if (v === "pustaka") m.innerHTML = renderPustaka();
+  else if (v === "profil") m.innerHTML = renderProfil();
+  else if (v === "panduan") m.innerHTML = renderPanduan();
+  else if (v === "penyusun") m.innerHTML = renderPenyusunView();
+}
+
+function renderBeranda() {
+  const total = appData.chapters.length || 1;
+  const doneCount = appData.chapters.filter(c => state.completed[c.id]).length;
+  const pct = Math.round((doneCount / total) * 100);
+
+  return `
+    <section class="hero">
+      <div>
+        <div class="hero-pill">● Lab Pembelajaran Akuntansi Dasar</div>
+        <h2>${esc(appData.config.heroTitle)}</h2>
+        <p>${esc(appData.config.heroDesc)}</p>
+        <div class="hero-actions">
+          ${appData.chapters.length ? `<button class="btn-amber" onclick="navigate('${appData.chapters[0].id}')">Mulai dari ${esc(appData.chapters[0].num)} →</button>` : ''}
+          <button class="btn-glass" onclick="navigate('evaluasi')">Coba Kuis Latihan</button>
+        </div>
+      </div>
+
+      <div class="cycle-widget">
+        <h4>Alur Pembelajaran (${appData.chapters.length} Tahap)</h4>
+        ${appData.chapters.slice(0, 4).map((c, idx) => `
+          <div class="cycle-step"><span class="cycle-num">${idx + 1}</span> ${esc(c.title)}</div>
+        `).join("")}
+      </div>
+    </section>
+
+    <div class="top-strip">
+      <div class="card tp-card">
+        <h4>🎯 Tujuan Pembelajaran</h4>
+        <ol class="tp-list">
+          ${appData.config.tujuanUmum.map(t => `<li>${esc(t)}</li>`).join("")}
+        </ol>
+      </div>
+      <div class="card progress-card">
+        <div>
+          <span style="font-size:12px; font-weight:700; color:var(--accent); text-transform:uppercase;">Progres Belajar Anda</span>
+          <h4 style="font-size:24px; font-weight:800; margin-top:4px;">${doneCount} / ${appData.chapters.length} Bab Selesai</h4>
+          <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${pct}%;"></div></div>
+        </div>
+        <p style="font-size:12.5px; color:var(--text-muted);">Selesaikan semua bab berurutan untuk menguasai siklus akuntansi dasar.</p>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div>
+        <h3>Materi Akuntansi Dasar (${appData.chapters.length} Bab Berkesinambungan)</h3>
+        <p>Pilih bab di bawah untuk mulai belajar, atau gunakan Menu Penyusun untuk mengedit dan menambah bab.</p>
+      </div>
+      <button class="btn-outline" onclick="navigate('materi-all')">Lihat Ringkasan Semua Bab →</button>
+    </div>
+
+    <div class="grid-2">
+      ${appData.chapters.map(c => {
+        const isDone = state.completed[c.id];
+        return `
+          <div class="card bab-card" style="border-left-color:${c.color};">
+            <div>
+              <div class="bab-head">
+                <span class="step-tag" style="background:${c.color};">LANGKAH ${esc(c.step)} • ${esc(c.num).toUpperCase()}</span>
+                <span class="status-pill ${isDone ? 'done' : ''}">${isDone ? '✓ Selesai' : 'Belum Selesai'}</span>
+              </div>
+              <h4>${esc(c.title)}</h4>
+              <p>${esc(c.desc)}</p>
+            </div>
+            <div class="bab-footer">
+              <span style="font-size:12px; color:var(--text-muted); font-weight:600;">Materi Terstruktur</span>
+              <button class="btn-primary" style="background:${c.color};" onclick="navigate('${c.id}')">Buka ${esc(c.num)} →</button>
+            </div>
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+function renderAllMateri() {
+  return `
+    <div class="section-header">
+      <div>
+        <h3>📒 Peta Materi Berkesinambungan (${appData.chapters.length} Bab)</h3>
+        <p>Semua materi saling terhubung dari pencatatan awal hingga laporan akhir.</p>
+      </div>
+    </div>
+    <div class="grid-2">
+      ${appData.chapters.map(c => `
+        <div class="card bab-card" style="border-left-color:${c.color};">
+          <div>
+            <span class="step-tag" style="background:${c.color};">${esc(c.num)}</span>
+            <h4 style="margin-top:10px;">${esc(c.title)}</h4>
+            <p>${esc(c.continuity || c.desc)}</p>
+          </div>
+          <button class="btn-primary" style="background:${c.color}; width:fit-content;" onclick="navigate('${c.id}')">Pelajari ${esc(c.num)} →</button>
+        </div>
+      `).join("")}
+    </div>
+    <div class="card" style="margin-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+      <div>
+        <strong>📚 Daftar Pustaka (Di Belakang Materi)</strong>
+        <p style="font-size:13px; color:var(--text-muted);">Lihat buku rujukan akuntansi dasar yang digunakan dalam penyusunan LabaLab.</p>
+      </div>
+      <button class="btn-outline" onclick="navigate('pustaka')">Buka Daftar Pustaka →</button>
+    </div>
+  `;
+}
+
+function getSimHtml(simType, color) {
+  if (simType === "persamaan") {
+    return `<div class="card"><div class="sim-box" style="margin-top:0;">
+      <h5 style="font-size:14px; font-weight:800;">🧪 Lab Simulasi: Cek Keseimbangan Persamaan Akuntansi</h5>
+      <div class="calc-grid">
+        <div class="input-group"><label>Total Harta / Aset (Rp)</label><input type="number" id="eq-harta" value="12000000"></div>
+        <div class="input-group"><label>Total Utang (Rp)</label><input type="number" id="eq-utang" value="2000000"></div>
+        <div class="input-group"><label>Total Modal (Rp)</label><input type="number" id="eq-modal" value="10000000"></div>
+      </div>
+      <button class="btn-primary" style="background:${color};" onclick="cekPersamaan()">Cek Keseimbangan</button>
+      <div class="sim-result" id="res-eq"></div>
+    </div></div>`;
+  }
+  if (simType === "debitkredit") {
+    return `<div class="card"><div class="sim-box" style="margin-top:0;">
+      <h5 style="font-size:14px; font-weight:800;">🧪 Lab Cek Cepat: Posisi Debit atau Kredit?</h5>
+      <div class="calc-grid">
+        <div class="input-group"><label>Pilih Jenis Akun</label>
+          <select id="dk-akun">
+            <option value="harta">Harta / Aset (Kas, Peralatan)</option>
+            <option value="beban">Beban (Listrik, Gaji, Sewa)</option>
+            <option value="utang">Utang (Utang Usaha / Bank)</option>
+            <option value="modal">Modal Pemilik</option>
+            <option value="pendapatan">Pendapatan Jasa</option>
+          </select>
+        </div>
+        <div class="input-group"><label>Kondisi Transaksi</label>
+          <select id="dk-arah"><option value="naik">Bertambah (+)</option><option value="turun">Berkurang (-)</option></select>
+        </div>
+      </div>
+      <button class="btn-primary" style="background:${color};" onclick="cekDebitKredit()">Tentukan Posisi Jurnal</button>
+      <div class="sim-result" id="res-dk"></div>
+    </div></div>`;
+  }
+  if (simType === "neracasaldo") {
+    return `<div class="card"><div class="sim-box" style="margin-top:0;">
+      <h5 style="font-size:14px; font-weight:800;">🧪 Lab Cek Keseimbangan Neraca Saldo</h5>
+      <div class="calc-grid">
+        <div class="input-group"><label>Total Kolom Debit (Rp)</label><input type="number" id="ns-deb" value="17000000"></div>
+        <div class="input-group"><label>Total Kolom Kredit (Rp)</label><input type="number" id="ns-kre" value="17000000"></div>
+      </div>
+      <button class="btn-primary" style="background:${color};" onclick="cekNeracaSaldo()">Periksa Balance</button>
+      <div class="sim-result" id="res-ns"></div>
+    </div></div>`;
+  }
+  if (simType === "laba") {
+    return `<div class="card"><div class="sim-box" style="margin-top:0;">
+      <h5 style="font-size:14px; font-weight:800;">🧪 Lab Kalkulator Laba & Modal Akhir</h5>
+      <div class="calc-grid">
+        <div class="input-group"><label>Modal Awal (Rp)</label><input type="number" id="lk-ma" value="10000000"></div>
+        <div class="input-group"><label>Total Pendapatan (Rp)</label><input type="number" id="lk-pd" value="5000000"></div>
+        <div class="input-group"><label>Total Beban (Rp)</label><input type="number" id="lk-bb" value="1500000"></div>
+        <div class="input-group"><label>Prive (Rp)</label><input type="number" id="lk-pr" value="0"></div>
+      </div>
+      <button class="btn-primary" style="background:${color};" onclick="hitungLabaModal()">Hitung Laba & Modal Akhir</button>
+      <div class="sim-result" id="res-lk"></div>
+    </div></div>`;
+  }
+  return "";
+}
+
+function renderChapter(babId) {
+  const idx = appData.chapters.findIndex(c => c.id === babId);
+  const c = appData.chapters[idx];
+  const prev = idx > 0 ? appData.chapters[idx - 1] : null;
+  const next = idx < appData.chapters.length - 1 ? appData.chapters[idx + 1] : null;
+
+  return `
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
+      <div>
+        <span class="step-tag" style="background:${c.color};">LANGKAH ${esc(c.step)} • ${esc(c.num).toUpperCase()}</span>
+        <h2 style="font-size:24px; font-weight:800; margin-top:6px;">${esc(c.title)}</h2>
+      </div>
+      <div style="display:flex; gap:8px;">
+        ${state.isAdmin ? `<button class="btn-amber" onclick="editChapterQuick('${c.id}')">✏️ Edit Bab Ini</button>` : ''}
+        <button class="btn-outline" onclick="navigate('beranda')">← Beranda</button>
+      </div>
+    </div>
+
+    ${c.continuity ? `<div class="card" style="margin-bottom:16px; background:#f0fdfa; border-color:#99f6e4;">
+      <strong>🔗 Hubungan Materi Berkesinambungan:</strong>
+      <p style="font-size:13.5px; margin-top:4px;">${esc(c.continuity)}</p>
+    </div>` : ''}
+
+    <div class="card tp-card" style="margin-bottom:18px;">
+      <h4>🎯 Tujuan Pembelajaran ${esc(c.num)}</h4>
+      <ul class="tp-list">${(c.tujuan || []).map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+    </div>
+
+    ${c.contentHtml}
+    ${getSimHtml(c.simType, c.color)}
+
+    <div class="card" style="margin-top:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <div>
+        <strong>Selesai membaca ${esc(c.num)}?</strong>
+        <p style="font-size:13px; color:var(--text-muted);">Tandai selesai lalu kerjakan kuis evaluasinya.</p>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn-outline" onclick="markDone('${c.id}')">${state.completed[c.id] ? '✓ Sudah Selesai' : 'Tandai Selesai'}</button>
+        <button class="btn-primary" onclick="openQuiz('${c.id}')">Kerjakan Kuis ${esc(c.num)} →</button>
+      </div>
+    </div>
+
+    <div class="page-nav-footer">
+      ${prev ? `<button class="btn-outline" onclick="navigate('${prev.id}')">← ${esc(prev.num)}: ${esc(prev.title)}</button>` : `<span></span>`}
+      ${next
+        ? `<button class="btn-primary" onclick="navigate('${next.id}')">Lanjut ke ${esc(next.num)}: ${esc(next.title)} →</button>`
+        : `<button class="btn-primary" onclick="navigate('pustaka')">Lanjut ke Daftar Pustaka (Belakang Materi) →</button>`
+      }
+    </div>
+  `;
+}
+
+function cekPersamaan() {
+  const h = parseFloat(document.getElementById("eq-harta").value) || 0;
+  const u = parseFloat(document.getElementById("eq-utang").value) || 0;
+  const m = parseFloat(document.getElementById("eq-modal").value) || 0;
+  const kanan = u + m;
+  const el = document.getElementById("res-eq");
+  el.style.display = "block";
+  el.innerHTML = h === kanan
+    ? `✅ <strong>SEIMBANG (BALANCE)!</strong> Total Harta (Rp ${h.toLocaleString('id-ID')}) = Utang + Modal (Rp ${kanan.toLocaleString('id-ID')}).`
+    : `❌ <strong>BELUM SEIMBANG!</strong> Selisih Rp ${Math.abs(h - kanan).toLocaleString('id-ID')}.`;
+}
+function cekDebitKredit() {
+  const akun = document.getElementById("dk-akun").value;
+  const arah = document.getElementById("dk-arah").value;
+  const isLeft = (akun === "harta" || akun === "beban");
+  const pos = (isLeft && arah === "naik") || (!isLeft && arah === "turun") ? "DEBIT (Sebelah Kiri)" : "KREDIT (Sebelah Kanan)";
+  const el = document.getElementById("res-dk");
+  el.style.display = "block";
+  el.innerHTML = `👉 Dicatat di posisi: <strong>${pos}</strong>`;
+}
+function cekNeracaSaldo() {
+  const d = parseFloat(document.getElementById("ns-deb").value) || 0;
+  const k = parseFloat(document.getElementById("ns-kre").value) || 0;
+  const el = document.getElementById("res-ns");
+  el.style.display = "block";
+  el.innerHTML = d === k ? `✅ <strong>BALANCE!</strong> Debit dan Kredit sama-sama Rp ${d.toLocaleString('id-ID')}.` : `⚠️ <strong>TIDAK BALANCE!</strong> Selisih Rp ${Math.abs(d - k).toLocaleString('id-ID')}.`;
+}
+function hitungLabaModal() {
+  const ma = parseFloat(document.getElementById("lk-ma").value) || 0;
+  const pd = parseFloat(document.getElementById("lk-pd").value) || 0;
+  const bb = parseFloat(document.getElementById("lk-bb").value) || 0;
+  const pr = parseFloat(document.getElementById("lk-pr").value) || 0;
+  const laba = pd - bb;
+  const akhir = ma + laba - pr;
+  const el = document.getElementById("res-lk");
+  el.style.display = "block";
+  el.innerHTML = `📊 <strong>${laba >= 0 ? 'Laba Bersih' : 'Rugi Bersih'} = Rp ${Math.abs(laba).toLocaleString('id-ID')}</strong> | Modal Akhir = <strong>Rp ${akhir.toLocaleString('id-ID')}</strong>`;
+}
+
+function getYouTubeId(url) {
+  const m = String(url || "").match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
+function renderVideo() {
+  return `
+    <div class="section-header">
+      <div><h3>🎬 Video Penjelasan Akuntansi</h3><p>Tonton video pembelajaran langsung atau buka tautan YouTube.</p></div>
+      ${state.isAdmin ? `<button class="btn-amber" onclick="openAdminTab('video')">✏️ Kelola Video YouTube</button>` : ''}
+    </div>
+    <div class="grid-2">
+      ${appData.videos.map(v => {
+        const ytId = getYouTubeId(v.url);
+        return `
+          <div class="card">
+            ${ytId
+              ? `<div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:10px; margin-bottom:12px;">
+                   <iframe src="https://www.youtube.com/embed/${ytId}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allowfullscreen></iframe>
+                 </div>`
+              : `<div style="background:linear-gradient(135deg,#0f2926,#115e59); border-radius:10px; height:145px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; margin-bottom:12px;">
+                   <span style="font-size:28px;">▶</span>
+                   <small style="color:#99f6e4;">${esc(v.bab)}</small>
+                 </div>`
+            }
+            <span style="font-size:11px; font-weight:700; color:var(--primary);">${esc(v.bab)}</span>
+            <h4 style="font-size:15.5px; margin:4px 0 12px;">${esc(v.title)}</h4>
+            <a href="${esc(v.url)}" target="_blank" rel="noopener" class="btn-primary">Buka di YouTube ↗</a>
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+function renderEvaluasi() {
+  return `
+    <div class="section-header">
+      <div>
+        <h3>✅ Evaluasi Pembelajaran (Soal, Jawab & Skoring)</h3>
+        <p>Kerjakan soal langsung di LabaLab dengan skor otomatis atau melalui tombol Quizizz.</p>
+      </div>
+      ${state.isAdmin ? `<button class="btn-amber" onclick="openAdminTab('kuis')">✏️ Kelola Soal & Quizizz</button>` : ''}
+    </div>
+    <div class="grid-2">
+      ${appData.chapters.map(c => {
+        const sc = state.scores[c.id];
+        const qCount = (appData.quizzes[c.id]?.questions || []).length;
+        const qLink = appData.config.quizizzLinks[c.id] || "#";
+        return `
+          <div class="card bab-card" style="border-left-color:${c.color};">
+            <div class="bab-head">
+              <span class="step-tag" style="background:${c.color};">${esc(c.num)}</span>
+              <span class="status-pill ${sc !== undefined ? 'done' : ''}">${sc !== undefined ? `Skor: ${sc}/100` : 'Belum Dikerjakan'}</span>
+            </div>
+            <h4>Kuis ${esc(c.title)}</h4>
+            <p>${qCount} soal pilihan ganda di aplikasi lengkap dengan kunci jawaban & skoring.</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn-primary" onclick="openQuiz('${c.id}')">Mulai Kuis →</button>
+              <a href="${esc(qLink)}" target="_blank" rel="noopener" class="btn-outline" style="color:#7c3aed; border-color:#ddd6fe;">🎮 Link Quizizz ↗</a>
+            </div>
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+let tempAns = {};
+function openQuiz(babId) {
+  tempAns = {};
+  navigate("quiz-" + babId);
+}
+
+function renderQuizPage(babId) {
+  const qData = appData.quizzes[babId];
+  const qLink = appData.config.quizizzLinks[babId] || "#";
+  if (!qData || !qData.questions.length) {
+    return `
+      <div class="card">
+        <h3>Belum ada soal untuk bab ini.</h3>
+        <p style="font-size:13.5px; color:var(--text-muted); margin:8px 0 14px;">Penyusun dapat menambahkan soal melalui Menu Penyusun atau menggunakan link Quizizz.</p>
+        <a href="${esc(qLink)}" target="_blank" rel="noopener" class="btn-primary">🎮 Buka Quizizz ↗</a>
+        <button class="btn-outline" onclick="navigate('evaluasi')">← Kembali</button>
+      </div>
+    `;
+  }
+  return `
+    <div class="section-header">
+      <div><h3>${esc(qData.title)}</h3><p>Pilih jawaban yang tepat lalu klik Periksa & Hitung Skor.</p></div>
+      <div style="display:flex; gap:8px;">
+        <a href="${esc(qLink)}" target="_blank" rel="noopener" class="btn-outline">🎮 Buka Quizizz ↗</a>
+        <button class="btn-outline" onclick="navigate('evaluasi')">← Kembali</button>
+      </div>
+    </div>
+    ${qData.questions.map((item, idx) => `
+      <div class="card" style="margin-bottom:14px;">
+        <p style="font-weight:700; margin-bottom:10px;">${idx + 1}. ${esc(item.q)}</p>
+        ${item.opts.map((opt, oIdx) => `
+          <button class="quiz-option" id="qo-${idx}-${oIdx}" onclick="pickOpt('${babId}', ${idx}, ${oIdx})">
+            ${String.fromCharCode(65 + oIdx)}. ${esc(opt)}
+          </button>
+        `).join("")}
+        <div id="qex-${idx}" style="display:none; margin-top:8px; font-size:13px; padding:9px; border-radius:8px; background:#f8fafc;"></div>
+      </div>
+    `).join("")}
+    <div class="card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+      <div id="scoreBox" style="font-weight:800;">Klik tombol di samping untuk melihat nilai Anda.</div>
+      <button class="btn-primary" onclick="gradeQuiz('${babId}')">Periksa & Hitung Skor</button>
+    </div>
+  `;
+}
+
+function pickOpt(babId, qIdx, oIdx) {
+  tempAns[qIdx] = oIdx;
+  appData.quizzes[babId].questions[qIdx].opts.forEach((_, i) => {
+    document.getElementById(`qo-${qIdx}-${i}`).classList.remove("selected");
+  });
+  document.getElementById(`qo-${qIdx}-${oIdx}`).classList.add("selected");
+}
+
+function gradeQuiz(babId) {
+  const qs = appData.quizzes[babId].questions;
+  let right = 0;
+  qs.forEach((item, idx) => {
+    const u = tempAns[idx];
+    item.opts.forEach((_, oIdx) => {
+      const btn = document.getElementById(`qo-${idx}-${oIdx}`);
+      btn.classList.remove("selected");
+      btn.disabled = true;
+      if (oIdx === item.ans) btn.classList.add("correct");
+      else if (oIdx === u && u !== item.ans) btn.classList.add("wrong");
+    });
+    if (u === item.ans) right++;
+    const ex = document.getElementById(`qex-${idx}`);
+    ex.style.display = "block";
+    ex.innerHTML = `${u === item.ans ? '✅ <strong>Benar!</strong>' : '❌ <strong>Salah.</strong>'} ${esc(item.exp)}`;
+  });
+  const score = Math.round((right / qs.length) * 100);
+  state.scores[babId] = score;
+  localStorage.setItem("labalab_scores", JSON.stringify(state.scores));
+  document.getElementById("scoreBox").innerHTML = `🎉 Skor Anda: <span style="color:var(--primary); font-size:20px;">${score}/100</span> (${right}/${qs.length} benar)`;
+}
+
+function renderDiskusi() {
+  return `
+    <div class="section-header">
+      <div><h3>💬 Ruang Diskusi & Kolaborasi</h3><p>Berdiskusi bersama teman dan pengajar melalui Grup Telegram atau papan tanya jawab.</p></div>
+      ${state.isAdmin ? `<button class="btn-amber" onclick="openAdminTab('link')">✏️ Ubah Link Telegram</button>` : ''}
+    </div>
+
+    <div class="card" style="background:linear-gradient(120deg, #0088cc, #006699); color:#fff; margin-bottom:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;">
+      <div>
+        <h4 style="font-size:18px; font-weight:800;">✈️ Gabung Grup Telegram LabaLab</h4>
+        <p style="font-size:13px; opacity:0.9;">Tanya jawab langsung soal jurnal, buku besar, dan laporan keuangan bersama grup kelas.</p>
+      </div>
+      <a href="${esc(appData.config.telegramUrl)}" target="_blank" rel="noopener" class="btn-amber" style="background:#fff; color:#0077b5; text-decoration:none;">Buka Grup Telegram ↗</a>
+    </div>
+
+    <div class="card" style="margin-bottom:18px;">
+      <h4 style="font-size:15px; font-weight:800; margin-bottom:10px;">Kirim Pertanyaan / Komentar</h4>
+      <div class="calc-grid">
+        <div class="input-group"><label>Nama Anda</label><input type="text" id="fName" placeholder="Nama lengkap / panggilan"></div>
+        <div class="input-group"><label>Pesan Diskusi</label><input type="text" id="fMsg" placeholder="Tulis pertanyaan akuntansi Anda..."></div>
+      </div>
+      <button class="btn-primary" onclick="sendPost()">Kirim Diskusi</button>
+    </div>
+
+    ${state.posts.map((p, idx) => `
+      <div class="card" style="margin-bottom:10px; padding:14px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+          <strong style="color:var(--primary); font-size:13.5px;">${esc(p.author)}</strong>
+          <div>
+            <small style="color:var(--text-muted); margin-right:8px;">${esc(p.time)}</small>
+            ${state.isAdmin ? `<button class="btn-danger" onclick="deletePost(${idx})">Hapus</button>` : ''}
+          </div>
+        </div>
+        <p style="font-size:13.5px;">${esc(p.text)}</p>
+      </div>
+    `).join("")}
+  `;
+}
+
+function sendPost() {
+  const author = document.getElementById("fName").value.trim() || "Pelajar";
+  const text = document.getElementById("fMsg").value.trim();
+  if (!text) return alert("Isi pesan terlebih dahulu.");
+  state.posts.unshift({ author, time: "Baru saja", text });
+  localStorage.setItem("labalab_forum", JSON.stringify(state.posts));
+  render();
+}
+
+function deletePost(idx) {
+  state.posts.splice(idx, 1);
+  localStorage.setItem("labalab_forum", JSON.stringify(state.posts));
+  render();
+}
+
+function renderGlosarium() {
+  return `
+    <div class="section-header">
+      <div><h3>📖 Glosarium Akuntansi Dasar (${appData.glossary.length} Istilah)</h3><p>Kamus mini istilah akuntansi agar mudah dipahami.</p></div>
+      ${state.isAdmin ? `<button class="btn-amber" onclick="openAdminTab('referensi')">✏️ Tambah Istilah</button>` : ''}
+    </div>
+    <div class="card" style="margin-bottom:16px;">
+      <input type="text" placeholder="Cari istilah akuntansi..." oninput="filterGlos(this.value)"
+        style="width:100%; padding:9px 14px; border:1px solid var(--border); border-radius:9px; font-family:inherit; font-size:13.5px;">
+    </div>
+    <div class="grid-2" id="glosGrid">
+      ${appData.glossary.map(g => `<div class="card" style="padding:14px;"><strong style="color:var(--primary);">${esc(g[0])}</strong><p style="font-size:13px; color:var(--text-muted); margin-top:4px;">${esc(g[1])}</p></div>`).join("")}
+    </div>
+  `;
+}
+
+function filterGlos(q) {
+  const s = q.trim().toLowerCase();
+  const f = appData.glossary.filter(g => g[0].toLowerCase().includes(s) || g[1].toLowerCase().includes(s));
+  document.getElementById("glosGrid").innerHTML = f.map(g =>
+    `<div class="card" style="padding:14px;"><strong style="color:var(--primary);">${esc(g[0])}</strong><p style="font-size:13px; color:var(--text-muted); margin-top:4px;">${esc(g[1])}</p></div>`
+  ).join("");
+}
+
+function renderPustaka() {
+  const lastBab = appData.chapters[appData.chapters.length - 1];
+  return `
+    <div class="section-header">
+      <div><h3>📚 Daftar Pustaka (Di Belakang Materi)</h3><p>Buku dan standar akuntansi yang menjadi referensi penyusunan materi LabaLab.</p></div>
+      <div style="display:flex; gap:8px;">
+        ${state.isAdmin ? `<button class="btn-amber" onclick="openAdminTab('referensi')">✏️ Edit Pustaka</button>` : ''}
+        ${lastBab ? `<button class="btn-outline" onclick="navigate('${lastBab.id}')">← Kembali ke ${esc(lastBab.num)}</button>` : ''}
+      </div>
+    </div>
+    <div class="card">
+      <ol style="padding-left:20px; font-size:14px; line-height:1.9;">
+        ${appData.bibliography.map(r => `<li style="margin-bottom:8px;">${esc(r)}</li>`).join("")}
+      </ol>
+    </div>
+  `;
+}
+
+function renderProfil() {
+  const p = appData.profile;
+  const initials = (p.nama || "LL").split(" ").map(x => x[0]).join("").slice(0, 2).toUpperCase();
+  return `
+    <div class="section-header">
+      <div><h3>👤 Profil Penyusun</h3><p>Identitas pembuat media pembelajaran LabaLab.</p></div>
+      <button class="btn-primary" onclick="navigate('penyusun')">${state.isAdmin ? '✏️ Edit Profil di Panel Penyusun' : '🔐 Login Penyusun'}</button>
+    </div>
+    <div class="card" style="max-width:680px;">
+      <div style="display:flex; gap:18px; align-items:center; flex-wrap:wrap; margin-bottom:18px;">
+        <div style="width:76px; height:76px; border-radius:18px; background:linear-gradient(135deg,#14b8a6,#0f766e); color:#fff; display:flex; align-items:center; justify-content:center; font-size:28px; font-weight:800;">${esc(initials)}</div>
+        <div>
+          <h4 style="font-size:19px; font-weight:800;">${esc(p.nama)}</h4>
+          <p style="font-size:13.5px; color:var(--primary); font-weight:600;">${esc(p.peran)}</p>
+          <p style="font-size:12.5px; color:var(--text-muted);">${esc(p.institusi)}</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <tr><th style="width:170px;">NIM / Identitas</th><td>${esc(p.nim)}</td></tr>
+          <tr><th>Program Studi / Jurusan</th><td>${esc(p.prodi)}</td></tr>
+          <tr><th>Email</th><td>${esc(p.email)}</td></tr>
+          <tr><th>Deskripsi Media</th><td>${esc(p.deskripsi)}</td></tr>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+function renderPanduan() {
+  return `
+    <div class="card" style="max-width:740px;">
+      <h4 style="font-size:15px; font-weight:800; margin-bottom:4px;">ℹ️ Panduan Penggunaan Media</h4>
+      <p class="small-guide-note" style="margin-bottom:12px;">
+        *Catatan: Informasi di bawah ini hanya panduan teknis cara memakai aplikasi (bukan bagian dari materi pelajaran akuntansi).
+      </p>
+      <div style="font-size:11.5px; color:var(--text-muted); line-height:1.65;">
+        <p>1. Gunakan menu di sisi kiri (atau ikon ☰ pada HP) untuk membuka Beranda, Bab Materi, Video, Evaluasi, Ruang Diskusi, Glosarium, Daftar Pustaka, dan Profil Penyusun.</p>
+        <p>2. Baca materi secara berurutan agar paham alur akuntansi dari pencatatan awal sampai laporan akhir.</p>
+        <p>3. Gunakan kotak <em>Lab Simulasi</em> untuk berlatih menghitung angka secara interaktif.</p>
+        <p>4. Buka menu <em>Evaluasi</em> untuk mengerjakan kuis berskor otomatis atau melalui tombol Quizizz, dan menu <em>Ruang Diskusi</em> untuk terhubung ke grup Telegram.</p>
+        <p>5. Menu <em>Login Penyusun</em> disediakan khusus bagi pembuat media untuk mengedit/menambah materi, link Telegram, YouTube, Quizizz, dan profil.</p>
+      </div>
+    </div>
+  `;
+}
+
+function openAdminTab(tab) {
+  state.adminTab = tab;
+  state.editingBabId = null;
+  navigate("penyusun");
+}
+
+function editChapterQuick(babId) {
+  state.adminTab = "materi";
+  state.editingBabId = babId;
+  navigate("penyusun");
+}
+
+function renderPenyusunView() {
+  if (!state.isAdmin) {
+    return `
+      <div class="card" style="max-width:440px; margin:30px auto; border-top:4px solid var(--primary);">
+        <div style="text-align:center; margin-bottom:18px;">
+          <div style="width:54px; height:54px; border-radius:14px; background:var(--primary-light); color:var(--primary); display:inline-flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:10px;">🔐</div>
+          <h3 style="font-size:20px; font-weight:800;">Login Khusus Penyusun</h3>
+          <p style="font-size:13px; color:var(--text-muted);">Masuk untuk menambah atau mengedit materi, link Telegram, YouTube, Quizizz, soal, dan profil.</p>
+        </div>
+        <form onsubmit="handleAdminLogin(event)">
+          <div class="input-group">
+            <label>Username Penyusun</label>
+            <input type="text" id="adm-user" placeholder="Masukkan username..." required />
+          </div>
+          <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="adm-pass" placeholder="Masukkan password..." required />
+          </div>
+          <div id="loginError" style="color:var(--danger); font-size:12.5px; font-weight:600; margin-bottom:10px; display:none;"></div>
+          <button type="submit" class="btn-primary" style="width:100%; justify-content:center; padding:11px;">Masuk ke Editor Penyusun →</button>
+        </form>
+      </div>
+    `;
+  }
+
+  const t = state.adminTab;
+  return `
+    <div class="section-header">
+      <div>
+        <h3>🛠️ Panel Editor Khusus Penyusun</h3>
+        <p>Kelola seluruh konten LabaLab secara langsung tanpa menyentuh kode.</p>
+      </div>
+      <button class="btn-danger" onclick="logoutAdmin()">Keluar / Logout Penyusun</button>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab-btn ${t==='link'?'active':''}" onclick="state.adminTab='link'; render();">🔗 Link, Beranda & Profil</button>
+      <button class="admin-tab-btn ${t==='materi'?'active':''}" onclick="state.adminTab='materi'; state.editingBabId=null; render();">📒 Kelola Materi (${appData.chapters.length})</button>
+      <button class="admin-tab-btn ${t==='video'?'active':''}" onclick="state.adminTab='video'; render();">🎬 Kelola YouTube (${appData.videos.length})</button>
+      <button class="admin-tab-btn ${t==='kuis'?'active':''}" onclick="state.adminTab='kuis'; render();">✅ Kelola Soal & Quizizz</button>
+      <button class="admin-tab-btn ${t==='referensi'?'active':''}" onclick="state.adminTab='referensi'; render();">📖 Glosarium & Pustaka</button>
+      <button class="admin-tab-btn ${t==='akun'?'active':''}" onclick="state.adminTab='akun'; render();">⚙️ Keamanan & Backup</button>
+    </div>
+
+    ${t === "link" ? renderAdminLinkProfil() : ""}
+    ${t === "materi" ? renderAdminMateri() : ""}
+    ${t === "video" ? renderAdminVideo() : ""}
+    ${t === "kuis" ? renderAdminKuis() : ""}
+    ${t === "referensi" ? renderAdminReferensi() : ""}
+    ${t === "akun" ? renderAdminAkunBackup() : ""}
+  `;
+}
+
+function handleAdminLogin(e) {
+  e.preventDefault();
+  const u = document.getElementById("adm-user").value.trim();
+  const p = document.getElementById("adm-pass").value;
+  if (u === appData.auth.username && p === appData.auth.password) {
+    state.isAdmin = true;
+    sessionStorage.setItem("labalab_admin_auth", "1");
+    renderSidebar();
+    renderTopUser();
+    render();
+    showToast("Selamat datang di Panel Penyusun!");
+  } else {
+    const err = document.getElementById("loginError");
+    err.textContent = "Username atau password salah!";
+    err.style.display = "block";
+  }
+}
+
+function logoutAdmin() {
+  state.isAdmin = false;
+  sessionStorage.removeItem("labalab_admin_auth");
+  renderSidebar();
+  renderTopUser();
+  navigate("beranda");
+  showToast("Berhasil logout dari mode penyusun.");
+}
+
+function renderAdminLinkProfil() {
+  const c = appData.config;
+  const p = appData.profile;
+  return `
+    <div class="grid-2">
+      <div class="card">
+        <h4 style="margin-bottom:12px;">🔗 Link Telegram & Teks Beranda</h4>
+        <div class="input-group"><label>Link Grup Telegram Diskusi</label><input type="url" id="cfg-tele" value="${esc(c.telegramUrl)}"></div>
+        <div class="input-group"><label>Judul Banner Beranda</label><input type="text" id="cfg-htitle" value="${esc(c.heroTitle)}"></div>
+        <div class="input-group"><label>Deskripsi Singkat Beranda</label><textarea id="cfg-hdesc">${esc(c.heroDesc)}</textarea></div>
+        <div class="input-group"><label>Tujuan Pembelajaran Umum (1 baris = 1 poin)</label><textarea id="cfg-tp">${esc(c.tujuanUmum.join("\n"))}</textarea></div>
+        <button class="btn-primary" onclick="saveAdminConfig()">💾 Simpan Pengaturan Beranda & Tele</button>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-bottom:12px;">👤 Edit Profil Penyusun</h4>
+        <div class="input-group"><label>Nama Penyusun</label><input type="text" id="prof-nama" value="${esc(p.nama)}"></div>
+        <div class="input-group"><label>Peran / Jabatan</label><input type="text" id="prof-peran" value="${esc(p.peran)}"></div>
+        <div class="input-group"><label>Institusi / Kampus / Sekolah</label><input type="text" id="prof-inst" value="${esc(p.institusi)}"></div>
+        <div class="calc-grid">
+          <div class="input-group"><label>NIM / NIP</label><input type="text" id="prof-nim" value="${esc(p.nim)}"></div>
+          <div class="input-group"><label>Program Studi</label><input type="text" id="prof-prodi" value="${esc(p.prodi)}"></div>
+        </div>
+        <div class="input-group"><label>Email</label><input type="email" id="prof-email" value="${esc(p.email)}"></div>
+        <div class="input-group"><label>Deskripsi Media</label><textarea id="prof-desc" style="min-height:65px;">${esc(p.deskripsi)}</textarea></div>
+        <button class="btn-primary" onclick="saveAdminProfile()">💾 Simpan Profil Penyusun</button>
+      </div>
+    </div>
+  `;
+}
+
+function saveAdminConfig() {
+  appData.config.telegramUrl = document.getElementById("cfg-tele").value.trim() || "#";
+  appData.config.heroTitle = document.getElementById("cfg-htitle").value.trim();
+  appData.config.heroDesc = document.getElementById("cfg-hdesc").value.trim();
+  appData.config.tujuanUmum = document.getElementById("cfg-tp").value.split("\n").map(s => s.trim()).filter(Boolean);
+  saveAppData("Link Telegram & Beranda berhasil disimpan!");
+}
+
+function saveAdminProfile() {
+  appData.profile = {
+    nama: document.getElementById("prof-nama").value.trim(),
+    peran: document.getElementById("prof-peran").value.trim(),
+    institusi: document.getElementById("prof-inst").value.trim(),
+    nim: document.getElementById("prof-nim").value.trim(),
+    prodi: document.getElementById("prof-prodi").value.trim(),
+    email: document.getElementById("prof-email").value.trim(),
+    deskripsi: document.getElementById("prof-desc").value.trim()
+  };
+  saveAppData("Profil penyusun berhasil diperbarui!");
+}
+
+function renderAdminMateri() {
+  if (state.editingBabId) {
+    const isNew = state.editingBabId === "__NEW__";
+    const bab = isNew ? {
+      id: "bab" + Date.now(),
+      step: String(appData.chapters.length + 1).padStart(2, "0"),
+      num: "Bab " + (appData.chapters.length + 1),
+      title: "",
+      desc: "",
+      color: "#0f766e",
+      continuity: "",
+      tujuan: ["Memahami konsep utama materi ini."],
+      simType: "none",
+      contentHtml: `<div class="card" style="margin-bottom:18px;">\n  <h4>1. Penjelasan Materi</h4>\n  <p>Tulis penjelasan materi di sini...</p>\n  <div class="formula-box">Rumus / Prinsip Utama: ...</div>\n  <div class="example-box">Contoh Kasus: ...</div>\n</div>`
+    } : appData.chapters.find(c => c.id === state.editingBabId);
+
+    return `
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <h4>${isNew ? '➕ Tambah Materi / Bab Baru' : '✏️ Edit Materi: ' + esc(bab.num)}</h4>
+          <button class="btn-outline" onclick="state.editingBabId=null; render();">← Batal</button>
+        </div>
+        <div class="calc-grid">
+          <div class="input-group"><label>Nomor Langkah (misal: 05)</label><input type="text" id="eb-step" value="${esc(bab.step)}"></div>
+          <div class="input-group"><label>Label Bab (misal: Bab V)</label><input type="text" id="eb-num" value="${esc(bab.num)}"></div>
+          <div class="input-group"><label>Warna Aksen Kartu</label><input type="color" id="eb-color" value="${esc(bab.color)}" style="height:40px; padding:3px;"></div>
+        </div>
+        <div class="input-group"><label>Judul Bab</label><input type="text" id="eb-title" value="${esc(bab.title)}" placeholder="Contoh: Jurnal Penutup & Penyesuaian"></div>
+        <div class="input-group"><label>Ringkasan Singkat (untuk kartu Beranda)</label><input type="text" id="eb-desc" value="${esc(bab.desc)}"></div>
+        <div class="input-group"><label>Keterkaitan Berkesinambungan dengan Bab Sebelumnya</label><input type="text" id="eb-cont" value="${esc(bab.continuity)}"></div>
+        <div class="input-group"><label>Tujuan Pembelajaran Bab (1 baris = 1 tujuan)</label><textarea id="eb-tuj">${esc((bab.tujuan || []).join("\n"))}</textarea></div>
+        <div class="input-group">
+          <label>Isi Materi (Boleh teks biasa atau HTML sederhana)</label>
+          <textarea id="eb-html" style="min-height:190px; font-family:monospace; font-size:12.5px;">${esc(bab.contentHtml)}</textarea>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn-primary" onclick="saveChapterEdit('${isNew ? '__NEW__' : bab.id}')">💾 Simpan Materi Bab</button>
+          <button class="btn-outline" onclick="state.editingBabId=null; render();">Batal</button>
+        </div>
+      </div>
+    `;
+  }
+
+  return `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+      <p style="font-size:13.5px; color:var(--text-muted);">Edit materi yang sudah ada atau tambahkan bab baru.</p>
+      <button class="btn-primary" onclick="state.editingBabId='__NEW__'; render();">+ Tambah Bab Materi Baru</button>
+    </div>
+    <div class="grid-2">
+      ${appData.chapters.map((c, idx) => `
+        <div class="card" style="border-left:5px solid ${c.color};">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <span class="step-tag" style="background:${c.color};">${esc(c.num)}</span>
+            <div style="display:flex; gap:6px;">
+              <button class="btn-outline" style="padding:5px 10px; font-size:12px;" onclick="state.editingBabId='${c.id}'; render();">✏️ Edit</button>
+              <button class="btn-danger" onclick="deleteChapter(${idx})">Hapus</button>
+            </div>
+          </div>
+          <h4>${esc(c.title)}</h4>
+          <p style="font-size:13px; color:var(--text-muted); margin-top:4px;">${esc(c.desc)}</p>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function saveChapterEdit(targetId) {
+  const title = document.getElementById("eb-title").value.trim();
+  if (!title) return alert("Judul bab tidak boleh kosong.");
+  const rawHtml = document.getElementById("eb-html").value;
+  const formattedHtml = rawHtml.includes("<") ? rawHtml : `<div class="card"><p style="white-space:pre-line; font-size:14px;">${esc(rawHtml)}</p></div>`;
+
+  const obj = {
+    step: document.getElementById("eb-step").value.trim() || "01",
+    num: document.getElementById("eb-num").value.trim() || "Bab Baru",
+    color: document.getElementById("eb-color").value || "#0f766e",
+    title,
+    desc: document.getElementById("eb-desc").value.trim(),
+    continuity: document.getElementById("eb-cont").value.trim(),
+    tujuan: document.getElementById("eb-tuj").value.split("\n").map(x => x.trim()).filter(Boolean),
+    contentHtml: formattedHtml
+  };
+
+  if (targetId === "__NEW__") {
+    const newId = "bab" + Date.now();
+    appData.chapters.push({ id: newId, simType: "none", ...obj });
+    appData.quizzes[newId] = { title: `Evaluasi ${obj.num}: ${obj.title}`, questions: [] };
+    appData.config.quizizzLinks[newId] = "https://quizizz.com/";
+  } else {
+    const idx = appData.chapters.findIndex(c => c.id === targetId);
+    appData.chapters[idx] = { ...appData.chapters[idx], ...obj };
+  }
+  state.editingBabId = null;
+  saveAppData("Materi bab berhasil disimpan!");
+  render();
+}
+
+function deleteChapter(idx) {
+  if (appData.chapters.length <= 1) return alert("Minimal harus tersisa 1 bab materi.");
+  if (!confirm(`Hapus ${appData.chapters[idx].num}: ${appData.chapters[idx].title}?`)) return;
+  appData.chapters.splice(idx, 1);
+  saveAppData("Bab materi dihapus.");
+  render();
+}
+
+function renderAdminVideo() {
+  return `
+    <div class="card" style="margin-bottom:18px;">
+      <h4 style="margin-bottom:10px;">➕ Tambah Link Video YouTube Baru</h4>
+      <div class="calc-grid">
+        <div class="input-group"><label>Label Bab</label><input type="text" id="nv-bab" placeholder="Contoh: Bab I / Tambahan"></div>
+        <div class="input-group"><label>Judul Video</label><input type="text" id="nv-title" placeholder="Judul penjelasan video..."></div>
+        <div class="input-group"><label>Link URL YouTube</label><input type="url" id="nv-url" placeholder="https://www.youtube.com/watch?v=..."></div>
+      </div>
+      <button class="btn-primary" onclick="addVideo()">+ Tambahkan Video</button>
+    </div>
+
+    <div class="grid-2">
+      ${appData.videos.map((v, i) => `
+        <div class="card">
+          <div class="input-group"><label>Bab</label><input type="text" id="ev-bab-${i}" value="${esc(v.bab)}"></div>
+          <div class="input-group"><label>Judul Video</label><input type="text" id="ev-title-${i}" value="${esc(v.title)}"></div>
+          <div class="input-group"><label>Link YouTube</label><input type="url" id="ev-url-${i}" value="${esc(v.url)}"></div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn-primary" onclick="updateVideo(${i})">💾 Simpan</button>
+            <button class="btn-danger" onclick="deleteVideo(${i})">Hapus</button>
+          </div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function addVideo() {
+  const bab = document.getElementById("nv-bab").value.trim() || "Materi";
+  const title = document.getElementById("nv-title").value.trim();
+  const url = document.getElementById("nv-url").value.trim();
+  if (!title || !url) return alert("Judul dan Link YouTube wajib diisi.");
+  appData.videos.push({ bab, title, url });
+  saveAppData("Video YouTube ditambahkan!");
+  render();
+}
+
+function updateVideo(i) {
+  appData.videos[i] = {
+    bab: document.getElementById(`ev-bab-${i}`).value.trim(),
+    title: document.getElementById(`ev-title-${i}`).value.trim(),
+    url: document.getElementById(`ev-url-${i}`).value.trim()
+  };
+  saveAppData("Video berhasil diperbarui!");
+}
+
+function deleteVideo(i) {
+  appData.videos.splice(i, 1);
+  saveAppData("Video dihapus.");
+  render();
+}
+
+function renderAdminKuis() {
+  return `
+    <div class="card" style="margin-bottom:18px;">
+      <h4 style="margin-bottom:10px;">🎮 Edit Link Quizizz Per Bab</h4>
+      <div class="grid-2">
+        ${appData.chapters.map(c => `
+          <div class="input-group">
+            <label>Link Quizizz — ${esc(c.num)} (${esc(c.title)})</label>
+            <input type="url" id="ql-${c.id}" value="${esc(appData.config.quizizzLinks[c.id] || '')}" placeholder="https://quizizz.com/...">
+          </div>
+        `).join("")}
+      </div>
+      <button class="btn-primary" onclick="saveQuizizzLinks()">💾 Simpan Semua Link Quizizz</button>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-bottom:10px;">➕ Tambah Soal Pilihan Ganda ke Kuis Aplikasi</h4>
+      <div class="calc-grid">
+        <div class="input-group">
+          <label>Pilih Bab</label>
+          <select id="nq-bab">
+            ${appData.chapters.map(c => `<option value="${c.id}">${esc(c.num)} — ${esc(c.title)}</option>`).join("")}
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Kunci Jawaban Benar</label>
+          <select id="nq-ans">
+            <option value="0">Pilihan A</option><option value="1">Pilihan B</option>
+            <option value="2">Pilihan C</option><option value="3">Pilihan D</option>
+          </select>
+        </div>
+      </div>
+      <div class="input-group"><label>Pertanyaan</label><input type="text" id="nq-q" placeholder="Tulis pertanyaan..."></div>
+      <div class="grid-2">
+        <div class="input-group"><label>Pilihan A</label><input type="text" id="nq-a"></div>
+        <div class="input-group"><label>Pilihan B</label><input type="text" id="nq-b"></div>
+        <div class="input-group"><label>Pilihan C</label><input type="text" id="nq-c"></div>
+        <div class="input-group"><label>Pilihan D</label><input type="text" id="nq-d"></div>
+      </div>
+      <div class="input-group"><label>Pembahasan Singkat</label><input type="text" id="nq-exp" placeholder="Penjelasan mengapa jawaban tersebut benar..."></div>
+      <button class="btn-primary" onclick="addQuizQuestion()">+ Tambahkan Soal</button>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+      <h4 style="margin-bottom:10px;">📋 Daftar Soal Saat Ini</h4>
+      ${appData.chapters.map(c => {
+        const qs = appData.quizzes[c.id]?.questions || [];
+        return `
+          <div style="margin-bottom:14px;">
+            <strong style="color:var(--primary);">${esc(c.num)} (${qs.length} soal)</strong>
+            ${qs.map((item, qi) => `
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 10px; background:#f8fafc; border-radius:8px; margin-top:4px; gap:10px;">
+                <span style="font-size:12.5px;">${qi+1}. ${esc(item.q)}</span>
+                <button class="btn-danger" onclick="deleteQuizQuestion('${c.id}', ${qi})">Hapus</button>
+              </div>
+            `).join("")}
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+function saveQuizizzLinks() {
+  appData.chapters.forEach(c => {
+    appData.config.quizizzLinks[c.id] = document.getElementById(`ql-${c.id}`).value.trim() || "#";
+  });
+  saveAppData("Semua link Quizizz berhasil disimpan!");
+}
+
+function addQuizQuestion() {
+  const bab = document.getElementById("nq-bab").value;
+  const q = document.getElementById("nq-q").value.trim();
+  const opts = [
+    document.getElementById("nq-a").value.trim(),
+    document.getElementById("nq-b").value.trim(),
+    document.getElementById("nq-c").value.trim(),
+    document.getElementById("nq-d").value.trim()
+  ];
+  const ans = parseInt(document.getElementById("nq-ans").value, 10);
+  const exp = document.getElementById("nq-exp").value.trim() || "Jawaban sesuai konsep materi.";
+  if (!q || opts.some(o => !o)) return alert("Pertanyaan dan seluruh pilihan A-D wajib diisi.");
+
+  if (!appData.quizzes[bab]) appData.quizzes[bab] = { title: `Evaluasi ${bab}`, questions: [] };
+  appData.quizzes[bab].questions.push({ q, opts, ans, exp });
+  saveAppData("Soal baru berhasil ditambahkan!");
+  render();
+}
+
+function deleteQuizQuestion(bab, idx) {
+  appData.quizzes[bab].questions.splice(idx, 1);
+  saveAppData("Soal dihapus.");
+  render();
+}
+
+function renderAdminReferensi() {
+  return `
+    <div class="grid-2">
+      <div class="card">
+        <h4 style="margin-bottom:10px;">📖 Tambah Istilah Glosarium</h4>
+        <div class="input-group"><label>Istilah</label><input type="text" id="ng-term" placeholder="Contoh: Jurnal Penutup"></div>
+        <div class="input-group"><label>Pengertian</label><textarea id="ng-def" style="min-height:65px;"></textarea></div>
+        <button class="btn-primary" onclick="addGlossaryTerm()">+ Tambah ke Glosarium</button>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-bottom:10px;">📚 Tambah Daftar Pustaka</h4>
+        <div class="input-group"><label>Referensi Buku / Jurnal (Format APA)</label><textarea id="nb-ref" placeholder="Contoh: Kasmir. (2020). Pengantar Akuntansi..."></textarea></div>
+        <button class="btn-primary" onclick="addBibRef()">+ Tambah ke Daftar Pustaka</button>
+      </div>
+    </div>
+  `;
+}
+
+function addGlossaryTerm() {
+  const t = document.getElementById("ng-term").value.trim();
+  const d = document.getElementById("ng-def").value.trim();
+  if (!t || !d) return alert("Istilah dan pengertian wajib diisi.");
+  appData.glossary.unshift([t, d]);
+  saveAppData("Istilah baru ditambahkan ke Glosarium!");
+  render();
+}
+
+function addBibRef() {
+  const r = document.getElementById("nb-ref").value.trim();
+  if (!r) return alert("Referensi tidak boleh kosong.");
+  appData.bibliography.push(r);
+  saveAppData("Referensi ditambahkan ke Daftar Pustaka!");
+  render();
+}
+
+function renderAdminAkunBackup() {
+  return `
+    <div class="grid-2">
+      <div class="card">
+        <h4 style="margin-bottom:10px;">🔑 Ubah Username & Password Penyusun</h4>
+        <div class="input-group"><label>Username Baru</label><input type="text" id="sec-user" value="${esc(appData.auth.username)}"></div>
+        <div class="input-group"><label>Password Baru</label><input type="text" id="sec-pass" value="${esc(appData.auth.password)}"></div>
+        <button class="btn-primary" onclick="updateAdminAuth()">💾 Perbarui Akun Login</button>
+      </div>
+
+      <div class="card">
+        <h4 style="margin-bottom:10px;">💾 Backup / Restore & Reset Data</h4>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">
+          Unduh file backup pengaturan/materi Anda (.json) agar dapat dipindahkan ke perangkat lain atau di-restore kapan saja.
+        </p>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
+          <button class="btn-primary" onclick="exportBackup()">⬇ Unduh Backup (.json)</button>
+          <button class="btn-danger" onclick="resetAllData()">↺ Reset ke Pengaturan Awal</button>
+        </div>
+        <div class="input-group">
+          <label>Restore dari File Backup (.json)</label>
+          <input type="file" accept=".json" onchange="importBackup(event)" />
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function updateAdminAuth() {
+  const u = document.getElementById("sec-user").value.trim();
+  const p = document.getElementById("sec-pass").value.trim();
+  if (!u || !p) return alert("Username dan password tidak boleh kosong.");
+  appData.auth = { username: u, password: p };
+  saveAppData("Username & password penyusun diperbarui!");
+}
+
+function exportBackup() {
+  const blob = new Blob([JSON.stringify(appData, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "backup-materi-labalab.json";
+  a.click();
+}
+
+function importBackup(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const parsed = JSON.parse(ev.target.result);
+      if (!parsed.chapters || !parsed.config) throw new Error();
+      appData = parsed;
+      saveAppData("Data berhasil di-restore dari backup!");
+      render();
+    } catch {
+      alert("Format file backup JSON tidak valid.");
+    }
+  };
+  reader.readAsText(file);
+}
+
+function resetAllData() {
+  if (!confirm("Kembalikan seluruh materi, link, dan profil ke pengaturan awal?")) return;
+  appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  saveAppData("Seluruh data berhasil direset ke awal.");
+  render();
+}
+
+renderSidebar();
+renderTopUser();
+render();
+</script>
+</body>
+</html>
